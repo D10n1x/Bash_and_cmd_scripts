@@ -5,22 +5,24 @@ FTP="FTP_адрес"
 FTPU="Логин_FTP"
 FTPP="Пароль_FTP"
 HOSTNAME=pgservertest
-path="/backups/test/" #Путь куда производится backup на FTP
-pathlast="/backups/test/lastbackups/" #Путь куда производится backup lastbackups файла FTP
-tmplast="/var/tmp/" #Путь откуда производится скачивание backupа на локальной машине
+pathback="/backups/test/" #Путь куда производится backup на FTP
+pathlast="/backups/test/backupslast/" #Путь куда производится backup backupslast файла FTP
+tmplast="/var/backups/backupslast/" #Путь откуда производится скачивание backupslast на локальной машине
+tmpback="/var/backups/"
 dbname="test1" #Имя БД
 
 
 #Резервное копирование
-cd /var
+cd $tmpback
 sudo -u postgres pg_dump $dbname | gzip > $DATE-$dbname-$HOSTNAME.psql.gz
-touch $tmplast$DATE-$dbname-$HOSTNAME.psql.gz
+cd $tmplast
+touch $DATE-$dbname-$HOSTNAME.psql.gz
 
 ftp -ni $FTP <<END
 quote USER $FTPU
 quote PASS $FTPP
-cd $path
-put $DATE-$dbname-$HOSTNAME.psql.gz $DATE-$dbname-$HOSTNAME.psql.gz
+cd $pathback
+put $tmpback$DATE-$dbname-$HOSTNAME.psql.gz $DATE-$dbname-$HOSTNAME.psql.gz
 cd $pathlast
 mdelete *
 put $tmplast$DATE-$dbname-$HOSTNAME.psql.gz $DATE-$dbname-$HOSTNAME.psql.gz
@@ -28,7 +30,7 @@ quit
 END
 
 #Уборка
-rm -f $DATE-$dbname-$HOSTNAME.psql.gz
+rm -f $tmpback$DATE-$dbname-$HOSTNAME.psql.gz
 rm -f $tmplast$DATE-$dbname-$HOSTNAME.psql.gz
 
 #Запуск скрипта на другой машине

@@ -15,7 +15,6 @@ set pathFTP=/backups/test/dtbackups/
 
 start /wait /d%path1с% 1cv8.exe ENTERPRISE /S"%nameser1c%:1541\%namebas1c%" /N%login% /P%password% /DisableStartupMessages /CЗавершитьРаботуПользователей
 
-::start /wait /d%path1с% 1cv8.exe DESIGNER /S"%nameser1c%:1541\%namebas1c%" /N"%login%" /P"%password%" /UCКодРазрешения /DumpIB "%pathDT%%nameDT%_%date:~-10%.dt" /DumpResult "%pathDT%Read_%date:~-10%.txt"
 start /wait /d%path1с% 1cv8.exe DESIGNER /S"%nameser1c%:1541\%namebas1c%" /N"%login%" /P"%password%" /UCКодРазрешения /DumpIB "%pathDT%%nameDT%_%date:~-10%.dt"
 
 start /wait /d%path1с% 1cv8.exe ENTERPRISE /S"%nameser1c%:1541\%namebas1c%" /N"%login%" /P"%password%" /C"РазрешитьРаботуПользователей" /UCКодРазрешения
@@ -35,5 +34,4 @@ echo.quit>> %ADDR%
 ::Чистка временных файлов
 del script
 del %pathDT%%nameDT%_%date:~-10%.dt
-::del %pathDT%Read_%date:~-10%.txt
 exit
