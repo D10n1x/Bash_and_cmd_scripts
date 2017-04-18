@@ -15,7 +15,7 @@ set pathFTP=/backups/test/dtbackups/
 
 start /wait /d%path1с% 1cv8.exe ENTERPRISE /S"%nameser1c%:1541\%namebas1c%" /N%login% /P%password% /DisableStartupMessages /CЗавершитьРаботуПользователей
 
-start /wait /d%path1с% 1cv8.exe DESIGNER /S"%nameser1c%:1541\%namebas1c%" /N"%login%" /P"%password%" /UCКодРазрешения /DumpIB "%pathDT%%nameDT%_%date:~-10%.dt"
+start /wait /d%path1с% 1cv8.exe DESIGNER /S"%nameser1c%:1541\%namebas1c%" /N"%login%" /P"%password%" /UCКодРазрешения /DumpIB "%pathDT%%date:~-10%_%nameDT%.dt"
 
 start /wait /d%path1с% 1cv8.exe ENTERPRISE /S"%nameser1c%:1541\%namebas1c%" /N"%login%" /P"%password%" /C"РазрешитьРаботуПользователей" /UCКодРазрешения
 
@@ -27,7 +27,7 @@ echo.%loginFTP%>> %ADDR%
 echo.%passFTP%>> %ADDR%
 echo.cd %pathFTP%>> %ADDR%
 echo.bin>> %ADDR%
-echo.send "%pathDT%%nameDT%_%date:~-10%.dt">> %ADDR%
+echo.send "%pathDT%%date:~-10%_%nameDT%.dt">> %ADDR%
 echo.quit>> %ADDR%
 %SystemRoot%\system32\ftp.exe -i -s:%ADDR%
 
